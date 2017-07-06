@@ -1,0 +1,42 @@
+{
+  "repository": "arbourd/kin-desktop",
+  "scripts": {
+    "postinstall": "cd app && yarn install",
+    "test": "xo",
+    "start": "electron ./app",
+    "dev": "electron --inspect=5858 ./app",
+    "pack": "electron-builder --dir",
+    "dist": "build"
+  },
+  "xo": {
+    "space": 4,
+    "envs": [
+      "node",
+      "browser"
+    ]
+  },
+  "build": {
+    "appId": "com.arbourd.kin-desktop",
+    "asar": true,
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    }
+  },
+  "devDependencies": {
+    "devtron": "^1.1.0",
+    "electron": "^1.7.3",
+    "electron-builder": "^19.11.1",
+    "xo": "^0.18.2"
+  }
+}
