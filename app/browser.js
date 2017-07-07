@@ -38,11 +38,20 @@ function switchView(view) {
 }
 
 ipcRenderer.on('show-preferences', () => {
+    document.querySelector('#settings-modal a[href="#settings-preferences"]').click();
     document.querySelector('a[href="#settings-modal"]').click();
 });
 
-ipcRenderer.on('add-account', () => {
+ipcRenderer.on('show-accounts', () => {
     document.querySelector('div.add-account button').click();
+});
+
+ipcRenderer.on('logout', () => {
+    document.querySelector('#settings-modal footer a.alert').click();
+});
+
+ipcRenderer.on('refresh-calendars', () => {
+    document.querySelector('#settings-preferences button').click();
 });
 
 ipcRenderer.on('toggle-calendars', () => {

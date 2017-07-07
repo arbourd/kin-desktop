@@ -5,7 +5,7 @@ const isDev = require('electron-is-dev');
 const {autoUpdater} = require('electron-updater');
 
 const config = require('./config');
-const menu = require('./menus/main');
+const menu = require('./menu');
 const {getMenuItemByLabel} = require('./utils');
 
 require('electron-context-menu')();
