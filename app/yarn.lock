@@ -69,8 +69,8 @@ electron-is-dev@^0.2.0:
   resolved "https://registry.yarnpkg.com/electron-is-dev/-/electron-is-dev-0.2.0.tgz#4bd0457a43327266de6fbdf29a5a65852f32bef2"
 
 electron-log@^2.2.6:
-  version "2.2.6"
-  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.6.tgz#ccfa3e09b39f321468c90a642701380a34079f1a"
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.7.tgz#8da0d2586b53b175392ae6b91dc510a67c195341"
 
 electron-store@^1.0.0:
   version "1.2.0"
@@ -138,8 +138,8 @@ js-yaml@^3.8.4:
     esprima "^3.1.1"
 
 jsonfile@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-3.0.0.tgz#92e7c7444e5ffd5fa32e6a9ae8b85034df8347d0"
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-3.0.1.tgz#a5ecc6f65f53f662c4415c7675a0331d0992ec66"
   optionalDependencies:
     graceful-fs "^4.1.6"
 
