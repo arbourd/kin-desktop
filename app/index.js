@@ -69,6 +69,7 @@ function createMainWindow() {
         x: lastWindow.x,
         y: lastWindow.y,
         icon,
+        autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'browser.js'),
             nodeIntegration: false,
@@ -110,7 +111,13 @@ function setMainWindowEvents(win) {
 }
 
 function createModalWindow(url) {
-    const win = new BrowserWindow({parent: mainWindow, modal: true});
+    const win = new BrowserWindow({
+        modal: true,
+        parent: mainWindow,
+        webPreferences: {
+            nodeIntegration: false
+        }
+    });
     win.loadURL(url);
 
     setModalWindowEvents(win);
