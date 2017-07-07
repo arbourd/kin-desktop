@@ -8,7 +8,7 @@ An unofficial desktop client for Kin, built with electron
 
 ### macOS
 
-With Homebrew-Cask `brew cask install arbourd/kin-desktop` or [download](https://github.com/arbourd/kin-desktop/releases/latest) the latest `.dmg`
+With Homebrew-Cask `brew cask install arbourd/tap/kin` or [download](https://github.com/arbourd/kin-desktop/releases/latest) the latest `.dmg`
 
 ### Windows
 
