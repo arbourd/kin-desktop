@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, Menu, ipcMain} = require('electron');
+const {app, BrowserWindow, shell, Menu, ipcMain} = require('electron');
 const isDev = require('electron-is-dev');
 const {autoUpdater} = require('electron-updater');
 
@@ -102,8 +102,13 @@ function setMainWindowEvents(win) {
         wc.send('finish-load-event', menu);
     });
 
+    wc.on('new-window', (e, url) => {
+        e.preventDefault();
+        shell.openExternal(url);
+    });
+
     wc.on('will-navigate', (e, url) => {
-        if (!url.startsWith('https://calendar.kin.today')) {
+        if (url.startsWith('https://api.kin.today')) {
             e.preventDefault();
             createModalWindow(url);
         }
@@ -114,11 +119,15 @@ function createModalWindow(url) {
     const win = new BrowserWindow({
         modal: true,
         parent: mainWindow,
+        show: false,
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: false
         }
     });
+
     win.loadURL(url);
+    win.once('ready-to-show', () => win.show());
 
     setModalWindowEvents(win);
 }
