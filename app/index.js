@@ -1,6 +1,6 @@
 'use strict';
 const path = require('path');
-const {app, BrowserWindow, shell, Menu, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu, shell} = require('electron');
 const isDev = require('electron-is-dev');
 const {autoUpdater} = require('electron-updater');
 
@@ -11,6 +11,7 @@ const {getMenuItemByLabel} = require('./utils');
 require('electron-context-menu')();
 
 let mainWindow;
+let modalWindow;
 let calendarsMenuItem;
 let notificationsMenuItem;
 
@@ -56,6 +57,17 @@ app.on('before-quit', () => {
 ipcMain.on('update-menu', (e, showCalendars, showNotifications) => {
     calendarsMenuItem.checked = showCalendars;
     notificationsMenuItem.checked = showNotifications;
+});
+
+ipcMain.on('close-modal', () => {
+    if (modalWindow) {
+        modalWindow.close();
+    }
+});
+
+ipcMain.on('redirect-from-modal', (_, url) => {
+    mainWindow.loadURL(url);
+    modalWindow.close();
 });
 
 function createMainWindow() {
@@ -110,40 +122,32 @@ function setMainWindowEvents(win) {
     wc.on('will-navigate', (e, url) => {
         if (url.startsWith('https://api.kin.today')) {
             e.preventDefault();
-            createModalWindow(url);
+            modalWindow = createModalWindow();
+            setModalWindowEvents(modalWindow, url);
         }
     });
 }
 
-function createModalWindow(url) {
+function createModalWindow() {
     const win = new BrowserWindow({
         modal: true,
         parent: mainWindow,
         show: false,
+        frame: false,
         autoHideMenuBar: true,
-        webPreferences: {
-            nodeIntegration: false
-        }
+        alwaysOnTop: true
     });
 
-    win.loadURL(url);
-    win.once('ready-to-show', () => win.show());
-
-    setModalWindowEvents(win);
+    win.loadURL(`file://${path.join(__dirname, 'modal.html')}`);
+    return win;
 }
 
-function setModalWindowEvents(win) {
+function setModalWindowEvents(win, url) {
     const wc = win.webContents;
 
-    win.on('blur', () => {
-        win.close();
-    });
+    win.once('ready-to-show', () => win.show());
 
-    wc.on('will-navigate', (e, url) => {
-        if (url.startsWith('https://calendar.kin.today')) {
-            e.preventDefault();
-            win.close();
-            mainWindow.loadURL(url);
-        }
+    wc.on('dom-ready', () => {
+        wc.send('modal-navigate', url);
     });
 }

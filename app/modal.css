@@ -1,0 +1,77 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+webview {
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+}
+
+.footer {
+    background-color: #f8f8f8;
+    font-size: .75em;
+    overflow: hidden;
+    width: 100%;
+    z-index: 100;
+}
+
+.wrapper {
+    padding: .5em .5em .8em .5em;
+}
+
+.btn {
+    background-color: #fff;
+    border-radius: .2em;
+    border: 1px solid #ccc;
+    color: #0a0a0a;
+    cursor: pointer;
+    padding: .85em 1em;
+    text-align: center;
+    transition: background-color .15s ease-out,color .15s ease-out;
+}
+
+.btn:hover {
+    background-color: #e6e6e6;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.loading-overlay {
+    align-items: center;
+    background-color: #fff;
+    bottom: 0;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+.loader {
+    animation: spin 1s infinite linear;
+    border: .25em solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    border-top: .25em solid #C1344B;
+    height: 16px;
+    width: 16px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

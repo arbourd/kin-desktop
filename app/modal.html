@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="stylesheet" href="modal.css">
+    </head>
+    <body>
+        <webview autosize></webview>
+        <div class="loading-overlay"><div class="loader"></div></div>
+        <div class="footer">
+            <div class="wrapper"><button class="btn" onclick="ipcRenderer.send('close-modal')">Cancel</button></div>
+        </div>
+        <script src="modal.js"></script>
+    </body>
+</html>
