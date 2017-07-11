@@ -78,6 +78,8 @@ function createMainWindow() {
         title: `${app.getName()}`,
         width: lastWindow.width,
         height: lastWindow.height,
+        minHeight: 600,
+        minWidth: 800,
         x: lastWindow.x,
         y: lastWindow.y,
         icon,

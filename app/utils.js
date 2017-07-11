@@ -1,18 +1,19 @@
 'use strict';
 const {BrowserWindow} = require('electron');
 
-exports.getWebContents = () => {
+exports.sendToBrowser = arg => {
     const [win] = BrowserWindow.getAllWindows();
 
     if (process.platform === 'darwin') {
         win.restore();
     }
 
-    return win.webContents;
+    return win.webContents.send(arg);
 };
 
 exports.getMenuItemByLabel = (menu, label) => {
-    return traverseMenuItems(menu.items, label);
+    const item = traverseMenuItems(menu.items, label);
+    return item ? item : null;
 };
 
 function traverseMenuItems(items, label) {

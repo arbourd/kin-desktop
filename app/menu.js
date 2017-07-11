@@ -4,7 +4,7 @@ const path = require('path');
 const {app, dialog, shell, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 
-const {getWebContents} = require('./utils');
+const {sendToBrowser} = require('./utils');
 
 const appName = app.getName();
 const appVersion = app.getVersion();
@@ -23,19 +23,19 @@ const macTemplate = {
             label: 'Preferences...',
             accelerator: 'Cmd+,',
             click() {
-                getWebContents().send('show-preferences');
+                sendToBrowser('show-preferences');
             }
         }, {
             label: 'Accounts...',
             click() {
-                getWebContents().send('show-accounts');
+                sendToBrowser('show-accounts');
             }
         }, {
             type: 'separator'
         }, {
             label: 'Logout',
             click() {
-                getWebContents().send('logout');
+                sendToBrowser('logout');
             }
         }, {
             type: 'separator'
@@ -68,19 +68,19 @@ const fileTemplate = {
             label: 'Preferences...',
             accelerator: 'Ctrl+,',
             click() {
-                getWebContents().send('show-preferences');
+                sendToBrowser('show-preferences');
             }
         }, {
             label: 'Accounts...',
             click() {
-                getWebContents().send('show-accounts');
+                sendToBrowser('show-accounts');
             }
         }, {
             type: 'separator'
         }, {
             label: 'Logout',
             click() {
-                getWebContents().send('logout');
+                sendToBrowser('logout');
             }
         }, {
             type: 'separator'
@@ -97,13 +97,13 @@ const viewTemplate = [{
     label: 'By Week',
     accelerator: 'CmdOrCtrl+1',
     click() {
-        getWebContents().send('toggle-view', 'week');
+        sendToBrowser('toggle-view', 'week');
     }
 }, {
     label: 'By Month',
     accelerator: 'CmdOrCtrl+2',
     click() {
-        getWebContents().send('toggle-view', 'month');
+        sendToBrowser('toggle-view', 'month');
     }
 }, {
     type: 'separator'
@@ -111,13 +111,13 @@ const viewTemplate = [{
     label: 'Next',
     accelerator: 'CmdOrCtrl+Right',
     click() {
-        getWebContents().send('move-right');
+        sendToBrowser('move-right');
     }
 }, {
     label: 'Previous',
     accelerator: 'CmdOrCtrl+Left',
     click() {
-        getWebContents().send('move-left');
+        sendToBrowser('move-left');
     }
 }, {
     type: 'separator'
@@ -125,7 +125,27 @@ const viewTemplate = [{
     label: 'Go to Today',
     accelerator: 'CmdOrCtrl+T',
     click() {
-        getWebContents().send('move-today');
+        sendToBrowser('move-today');
+    }
+}, {
+    type: 'separator'
+}, {
+    label: 'Make Text Bigger',
+    accelerator: 'CmdOrCtrl+Plus',
+    click() {
+        sendToBrowser('make-text-bigger');
+    }
+}, {
+    label: 'Make Text Smaller',
+    accelerator: 'CmdOrCtrl+-',
+    click() {
+        sendToBrowser('make-text-smaller');
+    }
+}, {
+    label: 'Reset Text Size',
+    accelerator: 'CmdOrCtrl+0',
+    click() {
+        sendToBrowser('reset-text-size');
     }
 }, {
     type: 'separator'
@@ -135,15 +155,14 @@ const viewTemplate = [{
     checked: true,
     accelerator: 'CmdOrCtrl+Shift+S',
     click() {
-        getWebContents().send('toggle-calendars');
+        sendToBrowser('toggle-calendars');
     }
 }, {
     type: 'checkbox',
     label: 'Show Notifications',
     checked: false,
-    accelerator: 'CmdOrCtrl+Shift+N',
     click() {
-        getWebContents().send('toggle-notifications');
+        sendToBrowser('toggle-notifications');
     }
 }, {
     type: 'separator'
@@ -151,7 +170,7 @@ const viewTemplate = [{
     label: 'Refresh Calendars',
     accelerator: 'CmdOrCtrl+R',
     click() {
-        getWebContents().send('refresh-calendars');
+        sendToBrowser('refresh-calendars');
     }
 }, {
     type: 'separator'

@@ -6,7 +6,8 @@ const config = new Store({
         lastWindow: {
             width: 1200,
             height: 800
-        }
+        },
+        textSize: 1.0
     }
 });
 

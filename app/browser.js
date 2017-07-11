@@ -1,6 +1,8 @@
 'use strict';
 const {ipcRenderer} = require('electron');
 
+const config = require('./config');
+
 function isShowingCalendars() {
     return document.querySelector('aside.show') !== null;
 }
@@ -35,6 +37,20 @@ function switchView(view) {
     }
 
     return currentView !== view;
+}
+
+function addStyleElement() {
+    const style = document.createElement('style');
+    style.id = 'textSizeZoom';
+
+    document.body.appendChild(style);
+}
+
+function setTextSize(size) {
+    const style = document.getElementById('textSizeZoom');
+
+    style.textContent = `.fc-content {zoom: ${size} !important;}`;
+    config.set('textSize', size);
 }
 
 ipcRenderer.on('show-preferences', () => {
@@ -80,7 +96,28 @@ ipcRenderer.on('move-right', () => {
     document.querySelectorAll('.calendar-toolbar button')[3].click();
 });
 
+ipcRenderer.on('make-text-bigger', () => {
+    const size = config.get('textSize');
+    if (size < 1.5) {
+        setTextSize(size + 0.1);
+    }
+});
+
+ipcRenderer.on('make-text-smaller', () => {
+    const size = config.get('textSize');
+    if (size > 0.7) {
+        setTextSize(size - 0.1);
+    }
+});
+
+ipcRenderer.on('reset-text-size', () => {
+    setTextSize(1.0);
+});
+
 ipcRenderer.on('finish-load-event', e => {
     addEventListeners();
+    addStyleElement();
+
     updateMenu(e.sender);
+    setTextSize(config.get('textSize') || 1.0);
 });
