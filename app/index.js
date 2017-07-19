@@ -72,7 +72,6 @@ ipcMain.on('redirect-from-modal', (_, url) => {
 
 function createMainWindow() {
     const lastWindow = config.get('lastWindow');
-    const icon = path.join(__dirname, './assets/icon.png');
 
     const win = new BrowserWindow({
         title: `${app.getName()}`,
@@ -82,7 +81,7 @@ function createMainWindow() {
         minWidth: 800,
         x: lastWindow.x,
         y: lastWindow.y,
-        icon,
+        icon: path.join(__dirname, 'assets/icon.png'),
         autoHideMenuBar: true,
         webPreferences: {
             preload: path.join(__dirname, 'browser.js'),
@@ -107,7 +106,7 @@ function setMainWindowEvents(win) {
             if (process.platform === 'darwin') {
                 app.hide();
             } else {
-                win.hide();
+                app.quit();
             }
         }
     });
