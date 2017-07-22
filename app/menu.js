@@ -1,7 +1,7 @@
 'use strict';
 const os = require('os');
 const path = require('path');
-const {app, BrowserWindow, dialog, shell, Menu} = require('electron');
+const {app, dialog, shell, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 
 const {sendToBrowser} = require('./utils');
@@ -173,12 +173,9 @@ const viewTemplate = [{
         sendToBrowser('sync-calendars');
     }
 }, {
+    role: 'reload',
     label: 'Reload Kin',
-    accelerator: 'CmdOrCtrl+Shift+R',
-    click() {
-        const [win] = BrowserWindow.getAllWindows();
-        win.reload();
-    }
+    accelerator: 'CmdOrCtrl+Shift+R'
 }, {
     type: 'separator'
 }, {
