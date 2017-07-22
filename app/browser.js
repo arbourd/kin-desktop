@@ -66,7 +66,7 @@ ipcRenderer.on('logout', () => {
     document.querySelector('#settings-modal footer a.alert').click();
 });
 
-ipcRenderer.on('refresh-calendars', () => {
+ipcRenderer.on('sync-calendars', () => {
     document.querySelector('#settings-preferences button').click();
 });
 

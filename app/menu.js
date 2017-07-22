@@ -1,7 +1,7 @@
 'use strict';
 const os = require('os');
 const path = require('path');
-const {app, dialog, shell, Menu} = require('electron');
+const {app, BrowserWindow, dialog, shell, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 
 const {sendToBrowser} = require('./utils');
@@ -167,10 +167,17 @@ const viewTemplate = [{
 }, {
     type: 'separator'
 }, {
-    label: 'Refresh Calendars',
+    label: 'Sync Calendars',
     accelerator: 'CmdOrCtrl+R',
     click() {
-        sendToBrowser('refresh-calendars');
+        sendToBrowser('sync-calendars');
+    }
+}, {
+    label: 'Reload Kin',
+    accelerator: 'CmdOrCtrl+Shift+R',
+    click() {
+        const [win] = BrowserWindow.getAllWindows();
+        win.reload();
     }
 }, {
     type: 'separator'
@@ -185,6 +192,27 @@ if (isDev) {
         role: 'toggledevtools'
     });
 }
+
+/*
+ *   Window
+ */
+const windowTemplate = [{
+    role: 'close'
+}, {
+    role: 'minimize'
+}, {
+    type: 'separator'
+}, {
+    label: 'Open in Browser',
+    accelerator: 'CmdOrCtrl+o',
+    click() {
+        shell.openExternal('https://calendar.kin.today/');
+    }
+}, {
+    type: 'separator'
+}, {
+    role: 'front'
+}];
 
 /*
  *   Help
@@ -235,7 +263,8 @@ const template = [{
     label: 'View',
     submenu: viewTemplate
 }, {
-    role: 'windowMenu'
+    label: 'Window',
+    submenu: windowTemplate
 }, {
     role: 'help',
     submenu: helpTemplate
